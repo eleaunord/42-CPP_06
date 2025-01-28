@@ -2,6 +2,7 @@
 
 void ScalarConverter::convert(const std::string &str)
 {
+	// déter type de litéral contenu dans la chaîne d'entrée
 	switch (getType(str))
 	{
 	case _char:
@@ -41,29 +42,31 @@ literal_type ScalarConverter::getType(const std::string &str)
 	return error;
 }
 
+// check si la chaîne est un seul char imprimable non numérique
 bool ScalarConverter::isChar(const std::string &str)
 {
 	return str.length() == 1 && std::isprint(str[0]) && !std::isdigit(str[0]);
 }
 
+// check si la chaîne rpz un entier dans la plage des int
 bool ScalarConverter::isInt(const std::string &str)
 {
 	char *end;
-	long result = std::strtol(str.c_str(), &end, 10);
-	return *end == '\0' && result >= std::numeric_limits<int>::min() && result <= std::numeric_limits<int>::max();
+	long result = std::strtol(str.c_str(), &end, 10); // detecte les entiers
+	return *end == '\0' && result >= std::numeric_limits<int>::min() && result <= std::numeric_limits<int>::max(); // toute la chaîne est convertible
 }
 
 bool ScalarConverter::isFloat(const std::string &str)
 {
 	char *end;
-	std::strtof(str.c_str(), &end);
-	return *end == 'f' && end == str.c_str() + str.length() - 1;
+	std::strtof(str.c_str(), &end);								 // tente conversion
+	return *end == 'f' && end == str.c_str() + str.length() - 1; // check si la chapîne se termine par f
 }
 
 bool ScalarConverter::isDouble(const std::string &str)
 {
 	char *end;
-	std::strtod(str.c_str(), &end);
+	std::strtod(str.c_str(), &end); // tente conversion
 	return *end == '\0';
 }
 
@@ -72,6 +75,7 @@ bool ScalarConverter::isPseudoLiteral(const std::string &str)
 	return str == "nan" || str == "+inf" || str == "-inf" || str == "nanf" || str == "+inff" || str == "-inff";
 }
 
+// std::setprecision pour formater les valeurs avec une précision fixe
 void ScalarConverter::charConversion(char c)
 {
 	std::cout << "char: '" << c << "'\n";
@@ -120,7 +124,7 @@ void ScalarConverter::pseudoConversion(literal_type type, const std::string &str
 	if (type == _float)
 	{
 		std::cout << "float: " << str << "\n";
-		std::cout << "double: " << str.substr(0, str.length() - 1) << "\n";
+		std::cout << "double: " << str.substr(0, str.length() - 1) << "\n"; // suppr f 
 	}
 	else if (type == _double)
 	{

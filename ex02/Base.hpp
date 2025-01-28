@@ -4,7 +4,7 @@
 class Base
 {
 	public :
-		virtual ~Base();
+		virtual ~Base(); // destructuer virutal = objets des classes dérivés détruits lorsque manipylies via un pointer Base*
 };
 
 #endif

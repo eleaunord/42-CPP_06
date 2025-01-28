@@ -20,6 +20,7 @@ enum literal_type
 class ScalarConverter
 {
 public:
+	// point d'entrée principal
 	static void convert(const std::string &str);
 
 private:
