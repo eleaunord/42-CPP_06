@@ -59,15 +59,36 @@ void identify(Base* p)
 // a reference to Base => use dynamic_cast to attempt downcasting to A&, B&, C&
 // => when we are sure the object CANNOT be Null == enforces the caller to provide a valid object (safer but more strict)
 // !! exceptions not allowed in this exo
+
 void identify(Base &p)
 {
-	// Use dynamic_cast with pointers to test each type
-	if (dynamic_cast<A *>(&p))
+	try
+	{
+		A &a = dynamic_cast<A &>(p);
+		(void)a;
 		std::cout << "type id by reference : A" << std::endl;
-	else if (dynamic_cast<B *>(&p))
+		return;
+	}
+	catch (const std::exception &) {} // Catch all standard exceptions
+
+	try
+	{
+		B &b = dynamic_cast<B &>(p);
+		(void)b;
 		std::cout << "type id by reference : B" << std::endl;
-	else if (dynamic_cast<C *>(&p))
+		return;
+	}
+	catch (const std::exception &) {}
+
+	try
+	{
+		C &c = dynamic_cast<C &>(p);
+		(void)c;
 		std::cout << "type id by reference : C" << std::endl;
-	else
-		std::cout << "unknown type" << std::endl;
+		return;
+	}
+	catch (const std::exception &) {}
+
+	std::cout << "unknown type" << std::endl;
 }
+
