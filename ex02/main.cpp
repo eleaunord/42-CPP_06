@@ -4,6 +4,7 @@
 
 Polymorphisme, cast dynamiques, utilisation références/pointeurs dans fonctions
 
+Créer une instance aléatoire de A, B ou C et la retourner en tant que pointeur de type Base*
 */
 
 int main()
